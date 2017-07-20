@@ -12,6 +12,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import com.rathana.entity.Student;
+import com.rathana.gui.form.AddStudentForm;
+import com.rathana.gui.shared.Footer;
 import com.rathana.service.MainScreenService;
 import com.rathana.service.impl.MainScreenServiceImpl;
 
@@ -23,6 +25,11 @@ public class MainScreen extends JFrame implements ActionListener{
 	
 	private MainScreenService mainSCreenService;
 	private TablePanel tablePanel;
+	
+	private AddStudentForm addStudentForm;
+	
+	//footer
+	private Footer footer;
 	
 	public MainScreen() {
 		initializer();
@@ -38,12 +45,16 @@ public class MainScreen extends JFrame implements ActionListener{
 	private void constructLayout() {
 		setLayout(new BorderLayout());
 		add(this.tablePanel,BorderLayout.CENTER);
+		add(this.footer,BorderLayout.SOUTH);
 	}
 	
 	private void initializeVariable(){
 
 		this.mainSCreenService= new MainScreenServiceImpl();
 		this.tablePanel=new TablePanel(this.mainSCreenService.getStudents());
+		this.footer=new Footer();
+		this.addStudentForm=new AddStudentForm();
+		
 	}
 	private JMenuBar initMenuBar() {
 		menuBar=new JMenuBar();
@@ -93,7 +104,7 @@ public class MainScreen extends JFrame implements ActionListener{
 				System.exit(0);
 			}
 		}else if(this.addItem==e.getSource()){
-			System.out.println("add new student");
+			addStudentForm.setVisible(true);
 		}
 	}
 }
