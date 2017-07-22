@@ -7,12 +7,15 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Label;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Vector;
 
 import javax.naming.Context;
 import javax.swing.AbstractButton;
@@ -21,11 +24,14 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -54,6 +60,12 @@ public class BasicUI extends JFrame implements ItemListener,ActionListener{
 	private JPasswordField password;
 	
 	private JTextArea editor;
+	
+	private JComboBox<String> comCountry;
+	private String[] countryModel={"Cambodia","Thailand","korea","China","japan","Hongkong","Vetanam"};
+	
+	private Vector<String> countryModelVector=new Vector<>();
+	private JList<String> countryList;
 	
 	public BasicUI() {
 		initializeVariables();
@@ -91,8 +103,8 @@ public class BasicUI extends JFrame implements ItemListener,ActionListener{
 		this.BodyPanel.add(this.tfEmail);
 		this.BodyPanel.add(this.password);
 		
-		this.editor.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-		this.editorPanel.add(this.editor);
+		//this.editor.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+		//this.editorPanel.add(this.editor);
 		
 		//subscribe event
 		this.javaCheck.addItemListener(this);
@@ -101,9 +113,12 @@ public class BasicUI extends JFrame implements ItemListener,ActionListener{
 		this.btnLeftImagIcon.addActionListener(this);
 		this.btnRightImagIcon.addActionListener(this);
 		
+		this.BodyPanel.add(this.comCountry);
+		this.BodyPanel.add(new JScrollPane(countryList));
+		
 		this.controlPanel.setLayout(new BorderLayout());
-		this.controlPanel.add(this.BodyPanel,BorderLayout.NORTH);
-		this.controlPanel.add(this.editorPanel,BorderLayout.CENTER);
+		this.controlPanel.add(this.BodyPanel,BorderLayout.CENTER);
+		//this.controlPanel.add(this.editorPanel,BorderLayout.CENTER);
 		
 		add(this.controlPanel,BorderLayout.CENTER);
 	}
@@ -151,7 +166,16 @@ public class BasicUI extends JFrame implements ItemListener,ActionListener{
 		editorPanel =new JPanel(new GridLayout());
 		editor=new JTextArea();
 		
+		this.comCountry=new JComboBox<>(this.countryModel);
+		
 	
+		for(int i=0; i<100 ;i++){
+			this.countryModelVector.add("Combodia-"+ i);
+		}
+		
+		this.countryList=new  JList<>(this.countryModelVector);
+		
+		
 	}
 	protected ImageIcon createImageIcon(String resource) {
 		return new ImageIcon(resource);
@@ -180,7 +204,14 @@ public class BasicUI extends JFrame implements ItemListener,ActionListener{
 				System.out.println(luxis.getText().toString());
 			}
 		}else if(e.getSource()==btnRightImagIcon) {
-			System.out.println("Name : "+ tfName.getText().toString() + " Email: "+tfEmail.getText().toString() +" Password "+password.getText().toString());
+			System.out.println("Name : "+ 
+		tfName.getText().toString() + " Email: "+
+		tfEmail.getText().toString() +
+		" Password "+password.getText().toString()+
+		"Country : "+this.comCountry.getItemAt(this.comCountry.getSelectedIndex())
+			);
+		
+		
 		}
 	}
 }
