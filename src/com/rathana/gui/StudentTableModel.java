@@ -40,7 +40,6 @@ public class StudentTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Student student=this.studentsList.get(rowIndex);
-		
 		switch (columnIndex) {
 		case 0: return student.getId(); 
 		case 1: return student.getName(); 
